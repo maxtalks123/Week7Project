@@ -21,7 +21,11 @@ app.get("/", (request, response) => {
 
 app.get("/posts", async (request, response) => {
   try {
-    let posts = await db.query(`SELECT * FROM guestbook`.all());
+    let posts = (
+      await db.query(
+        `SELECT guestbook.title, guestbook.content, guestbook.rating, categories.category_name FROM guestbook INNER JOIN categories ON guestbook.id = categories.id`
+      )
+    ).rows;
     console.log(posts);
     response.status(200).json(posts);
     return;
@@ -29,3 +33,38 @@ app.get("/posts", async (request, response) => {
     response.status(400).json(err);
   }
 });
+
+app.post("/posts", async (request, response) => {
+  try {
+    let title = request.body.title;
+    let content = request.body.content;
+    let rating = request.body.rating;
+    let category_name = request.body.category_name;
+    let result = await db.query(
+      `INSERT INTO categories (category_name)
+      INSERT INTO guestbook (title, content, rating, category_name) VALUES 
+    ($1, $2, $3, $4)`,
+      [title, content, rating, category_name]
+    );
+    response.status(200).json(result);
+  } catch (err) {
+    response.status(400).json(err);
+  }
+});
+
+//post request using $ instead of ? as this is for postgres.
+
+// app.post("/posts", async (request, response) => {
+//   try {
+//     console.log("Post message received");
+//     const title = request.body.title;
+//     const content = request.body.content;
+//     const rating = request.body.rating;
+//     const category = request.body.category;
+//     const newPost = db.query(`INSERT INTO guestbook (title, content, rating, category) VALUES (?, ?, ?, ?)`)
+//   }
+// })
+
+//update request
+
+//delete request
