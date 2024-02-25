@@ -16,8 +16,8 @@ db.query(`CREATE TABLE IF NOT EXISTS guestbook(
     FOREIGN KEY (category_name) REFERENCES categories(category_name)
 )`);
 
-db.query(`INSERT INTO guestbook (title, content, rating, category_id, category_name) VALUES 
-('Horrible experience', 'this was a disgusting place to stay, I hated every minute of it. I would like a refund.', 'Horrible', 1, '),
+db.query(`INSERT INTO guestbook (title, content, rating) VALUES 
+('Horrible experience', 'this was a disgusting place to stay, I hated every minute of it. I would like a refund.', 'Horrible'),
 ('Excellent, I would really recommend', 'Food was excellent, comfort, comfortable pillows, staff were wonderful. Even got a 20% discount for being nice', 'Excellent'),
 ('Alright value for money', 'cant really argue for the price I paid, cheap and cheerful. Nothing too crazy or amazing, I would probably stay again if I was on a budget', 'meh')`);
 
