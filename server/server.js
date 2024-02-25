@@ -19,7 +19,7 @@ app.get("/", (request, response) => {
   response.send("happy days");
 });
 
-app.get("/seedposts", async (request, response) => {
+app.get("/posts", async (request, response) => {
   try {
     let posts = (
       await db.query(
@@ -47,6 +47,19 @@ app.post("/posts", async (request, response) => {
     response.status(200).json(result);
   } catch (err) {
     response.status(500).json(err);
+  }
+});
+
+app.post("/categories", async (request, response) => {
+  try {
+    let categoryName = request.body.category_name;
+    let result = await db.query(
+      `INSERT INTO categories (category_name) VALUES ($1)`,
+      [categoryName]
+    );
+    response.status(200).json(result);
+  } catch (error) {
+    response.status(500).json(error);
   }
 });
 

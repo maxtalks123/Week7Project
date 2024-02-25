@@ -1,5 +1,4 @@
 //check requirements against moodle
-//sort by alphabetical/category
 //get post request to update categories database
 //make categories form option in to dropdown menu
 //make rating in to radio

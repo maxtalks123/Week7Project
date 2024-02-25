@@ -8,6 +8,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  color: white;
 }
 button:hover {
   border-color: #646cff;
@@ -17,7 +18,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.individualReview {
-  margin: 5px;
-  padding: 2px;
+body {
+  background-color: color-mix(
+    in srgb-linear,
+    rgb(17, 127, 127) 60,
+    rgb(41, 14, 14) 40
+  );
 }

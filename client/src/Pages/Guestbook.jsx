@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import SortFunction from "./SortFunction";
+import "./Guestbook.css";
 
 export default function Guestbook() {
   const [guestbook, setGuestbook] = useState([]);
@@ -7,9 +9,9 @@ export default function Guestbook() {
 
   useEffect(() => {
     getReviews();
-  }, []);
+  }, [form]);
   async function getReviews() {
-    let data = await fetch(`http://localhost:6020/seedposts`);
+    let data = await fetch(`http://localhost:6020/posts`);
     let result = await data.json();
     setGuestbook(result);
   }
@@ -19,13 +21,12 @@ export default function Guestbook() {
       <h3>Review title: {reviews.title}</h3>
       <p>What this user said: {reviews.content}</p>
       <p>What this user rated us: {reviews.rating}</p>
-      <p>Category: {reviews.category}</p>
+      <p>Category: {reviews.category_name}</p>
     </div>
   ));
 
   function handleChange(event) {
     setForm({ ...form, [event.target.name]: event.target.value });
-    console.log(form);
   }
 
   async function handleSubmit(event) {
@@ -43,9 +44,9 @@ export default function Guestbook() {
   }
 
   return (
-    <div>
+    <div key={guestbook.id} className="guestbookContainer">
       <h1>See what our guests said below!</h1>
-      <form onSubmit={handleSubmit}>
+      <form key={guestbook.id} onSubmit={handleSubmit}>
         <input
           placeholder="title your review"
           name="title"
@@ -67,8 +68,11 @@ export default function Guestbook() {
           onChange={handleChange}
         ></input>
         <button type="submit">Submit here</button>
+        <SortFunction optionValue={reviewsJSX.category_name} />
       </form>
-      {reviewsJSX ? reviewsJSX : <h1>No Reviews Found, add yours!</h1>}
+      <div className="alignReviews">
+        {reviewsJSX ? reviewsJSX : <h1>No Reviews Found, add yours!</h1>}
+      </div>
     </div>
   );
 }
